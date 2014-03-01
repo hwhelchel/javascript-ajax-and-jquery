@@ -17,10 +17,12 @@ var $Wrapper = {
       type: request,
       url:  route,
       success: function(resp){
-        console.log(resp)
+        console.log(JSON.parse(resp));
+        var ans = JSON.parse(resp)
+        $('ul li:nth-child('+ans.cell+')').css("background-color", ans.color);
       },
       error: function(){
-        console.log(error)
+        console.log(error);
       }
     });
   }

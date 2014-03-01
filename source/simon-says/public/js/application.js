@@ -13,22 +13,33 @@ var $Wrapper = {
     var request = 'POST'
     var route = '/color'
     var error = 'error!'
+    var wrapper = this
     $.ajax({
       type: request,
       url:  route,
       success: function(resp){
-        console.log(JSON.parse(resp));
-        var ans = JSON.parse(resp)
-        $('ul li:nth-child('+ans.cell+')').css("background-color", ans.color);
+        wrapper.updateCellColor(JSON.parse(resp));
       },
       error: function(){
         console.log(error);
       }
     });
+  },
+
+  updateCellColor: function(resp) {
+    console.log(this.cssStyle(resp.color));
+    $(this.cellSelector(resp.cell)).css(this.cssStyle(resp.color));
+  },
+
+  cellSelector: function(cell){
+    return 'ul li:nth-child(' + cell + ')'
+  },
+
+  cssStyle: function(color) {
+    return {'background-color': color}
   }
 }
 
 $(function(){
-
   $Wrapper.getColor();
 });
